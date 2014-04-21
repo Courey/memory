@@ -5,7 +5,7 @@
 
   function init(){
     $('#animate').click(animate);
-    $('#start').click(load);
+    $('#start').click(loadBoard);
     $('.grid').click(flip);
   }
 
@@ -22,7 +22,7 @@
     $tableInfo.append('<img>');
   }
 
-  function load(){
+  function loadBoard(){
     clearImages();
     loadImg();
     addImgClass();
@@ -33,7 +33,7 @@
 
   function timerReset(){
     clearInterval(timer);
-    countdown = 600;
+    countdown = 60;
     $('#countdown').css('background-color', 'rgba(37, 68, 134, 0.88)');
     timer = setInterval(updateTimer, 1000);
   }
@@ -63,7 +63,7 @@
   function addImgClass(){
     $('tbody > tr > td > .grid > img:nth-child(1)').addClass('back');
     $('tbody > tr > td > .grid > img:nth-child(2)').addClass('front');
-    $('tbody > tr > td > .grid > img.back').attr('src','./media/back.jpeg');
+    $('tbody > tr > td > .grid > img.back').attr('src','./media/back.png');
   }
 
   function randomImage(){
@@ -88,7 +88,6 @@
   }
 
   function flip(){
-    debugger;
     click ++;
     $(this).toggleClass('rotate selected');
     var selectedImage = $(this).children('.front');
@@ -103,6 +102,8 @@
   }
 
   function matchCheck(){
+    var winCheck = $('.match').length;
+
     if(imageNumber[0] !== imageNumber[1]){
       setTimeout(function(){
         $('.selected:not(.match)').toggleClass('rotate');
@@ -115,6 +116,10 @@
       imageNumber = [];
     }
 
+    if(winCheck === 18){
+      alert('You win!');
+      clearInterval(timer);
+    }
   }
 
   function animate(){
